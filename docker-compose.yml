@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Service 1: PostgreSQL
+  db:
+    image: postgres:16-alpine
+    container_name: social_network_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  # Service 2: Redis (Phải nằm thẳng hàng với db)
+  redis:
+    image: redis:alpine
+    container_name: social_network_redis
+    ports:
+      - "6379:6379"
+
+# Khai báo Volume chung
+volumes:
+  db_data:
